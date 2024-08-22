@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { validateEmail as validateEmailFunction } from "../common/validateEmail"; // Importe a função de validação
+import { validateEmail as validateEmailFunction } from "../common/validateEmail"; 
 
 interface ForgotPasswordProps {
   toggleModal: () => void;
@@ -17,8 +17,6 @@ export default function ForgotPasswordModal({ toggleModal }: ForgotPasswordProps
     const error = validateEmailFunction(email);
     
     if (error.length === 0) {
-      
-      alert("Instruções enviadas para o e-mail informado.");
       setEmailSend(true);
     } else {
       // Caso o e-mail seja inválido, exibe a mensagem de erro
@@ -28,25 +26,33 @@ export default function ForgotPasswordModal({ toggleModal }: ForgotPasswordProps
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="absolute inset-0 bg-gray-900 opacity-50" onClick={toggleModal}></div>
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg z-10 max-w-sm mx-auto">
-        <h2 className="text-2xl font-bold mb-4">Recuperar Senha</h2>
+      <div className="absolute hidden sm:block inset-0 bg-gray-900 opacity-50" onClick={toggleModal}>
+      </div>
+      <form onSubmit={handleSubmit} className="bg-white flex flex-col p-8 rounded-lg shadow-lg z-10 sm:max-w-sm sm:min-w-1 sm:min-h-1 min-h-full min-w-full mx-auto">
+        <h2 className="text-2xl flex items-center font-bold gap-4 mb-4">
+          <span className="hover:cursor-pointer sm:hidden block" onClick={toggleModal}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6"> 
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /> 
+            </svg>
+          </span> 
+          Recuperar Senha
+        </h2>
         {emailSend ? (
-          <div>
-            <p>Enviamos um link de recuperação de para o seu e-mail cadastrado. Por favor, verifique a sua caixa de entrada e a pasta de spam, se necessário.</p>
+          <>
+            <p className="flex-1">Enviamos um link de recuperação de para o seu e-mail cadastrado. Por favor, verifique a sua caixa de entrada e a pasta de spam, se necessário.</p>
             <div className="flex justify-center mt-6">
               <button type="button"
-                onClick={toggleModal}
+                onClick={() => window.location.href = "/reset-password"}
                 className="w-full py-2 px-4 bg-orange-600 text-white font-semibold rounded-md shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
               >
                 Entendido
               </button>
             </div>
-          </div>
+          </>
         ) : (
           <>
             <p className="mb-4">Para recuperar sua senha, digite o e-mail cadastrado.</p>
-            <div className="space-y-3">
+            <div className="space-y-3 flex-1">
               <label htmlFor="forgot-email" className="block text-sm font-medium text-gray-700">E-mail</label>
               <input
                 type="text"
