@@ -4,38 +4,22 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { validateEmail, validatePassword } from '../common/validateEmail';
+import ForgotPasswordModal from '../components/ForgotPasswordModal';
 
 const Login = () => {
   // Definindo os estados para armazenar os valores dos campos e mensagens de erro
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Função de validação dos campos
   const validateForm = () => {
     const newErrors: { email?: string; password?: string } = {};
 
-    // Validação do e-mail
-    if (!email) {
-      newErrors.email = 'O e-mail é obrigatório';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = 'Formato de e-mail inválido';
-    }
-
-    // Validação da senha
-    if (!password) {
-      newErrors.password = 'A senha é obrigatória';
-    } else if (password.length < 8 || password.length > 32) {
-      newErrors.password = 'A senha deve ter entre 8 e 32 caracteres';
-    } else if (!/[A-Z]/.test(password)) {
-      newErrors.password = 'A senha deve conter pelo menos uma letra maiúscula';
-    } else if (!/[a-z]/.test(password)) {
-      newErrors.password = 'A senha deve conter pelo menos uma letra minúscula';
-    } else if (!/[0-9]/.test(password)) {
-      newErrors.password = 'A senha deve conter pelo menos um número';
-    } else if (!/[!@#$%^&*]/.test(password)) {
-      newErrors.password = 'A senha deve conter pelo menos um caractere especial';
-    }
+    newErrors.password = validatePassword(email)
+    newErrors.email = validateEmail(password);
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -54,6 +38,9 @@ const Login = () => {
       }
     }
   };
+
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
+
 
   return (
     <div className="flex flex-col lg:flex-row h-screen">
@@ -94,7 +81,7 @@ const Login = () => {
                 className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring ${errors.password ? 'border-red-500' : 'border-gray-300'} focus:ring-indigo-200 focus:border-indigo-500 sm:text-sm`}
               />
               {errors.password && <p className="mt-2 text-sm text-red-500">{errors.password}</p>}
-              <a href="#" className="block text-sm text-blue-500 mt-4 hover:underline">Esqueci minha senha</a>
+              <a href="#" onClick={toggleModal} className="block text-sm text-blue-500 mt-4 hover:underline">Esqueci minha senha</a>
             </div>
             <button
               type="submit"
@@ -117,7 +104,9 @@ const Login = () => {
             />
         </div>
       </div>
+      {isModalOpen && <ForgotPasswordModal toggleModal={toggleModal}/>}
     </div>
+
   );
 };
 
