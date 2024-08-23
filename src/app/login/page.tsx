@@ -18,11 +18,11 @@ const Login = () => {
   const validateForm = () => {
     const newErrors: { email?: string; password?: string } = {};
 
-    newErrors.password = validatePassword(email)
-    newErrors.email = validateEmail(password);
+    newErrors.password = validatePassword(password)
+    newErrors.email = validateEmail(email);
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return newErrors.email.length === 0 && newErrors.password.length === 0 ? true : false;
   };
 
   // Função de envio do formulário
@@ -43,25 +43,23 @@ const Login = () => {
 
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen">
+    <div className="flex flex-col lg:flex-row h-screen text-sm">
       {/* Container da imagem para telas pequenas */}
       <div className="lg:hidden w-full h-full relative">
-        <div className="absolute inset-0">
-          <Image
-              src="/trajeton-logo-mobile.png" 
-              alt="Logo Trajeton Magazine"
-              layout="fill"
-              objectFit="contain"
-            />
-        </div>
+        <Image
+            src="/trajeton-logo-mobile.png" 
+            alt="Logo Trajeton Magazine"
+            fill
+            objectFit="contain"
+          />
       </div>
 
       {/* Container do formulário */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center  p-8">
+      <div className="w-full flex items-center justify-center  p-8">
         <div className="w-full max-w-md lg:p-8 rounded-lg">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email <span className="text-red-600">*</span></label>
               <input
                 id="email"
                 type="text"
@@ -72,7 +70,7 @@ const Login = () => {
               {errors.email && <p className="mt-2 text-sm text-red-500">{errors.email}</p>}
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Senha</label>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Senha <span className="text-red-600">*</span></label>
               <input
                 id="password"
                 type="password"
@@ -94,8 +92,8 @@ const Login = () => {
       </div>
 
       {/* Container da imagem para telas grandes */}
-      <div className="hidden lg:block w-1/2 w-full h-full relative" style={{backgroundColor: "rgb(240, 240, 230)"}}>
-        <div className="absolute inset-0">
+      <div className="hidden lg:block w-full h-full relative"  style={{backgroundColor: " #fcececf8"}} >
+        <div className="absolute m-auto inset-0 w-4/6">
           <Image
               src="/trajeton-logo-desktop.png" 
               alt="Logo Trajeton Magazine"
