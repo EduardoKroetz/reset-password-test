@@ -1,4 +1,5 @@
-import { validateEmail, validatePassword } from "@/app/common/validateEmail";
+import InputPassword from "@/app/components/InputPassword";
+import { validateEmail, validatePassword } from "@/app/utils/validateEmail";
 import { useState } from "react";
 
 export default function LoginForm({ toggleModal } : { toggleModal: () => void })
@@ -37,10 +38,11 @@ export default function LoginForm({ toggleModal } : { toggleModal: () => void })
         <div className="w-full max-w-md lg:p-8 rounded-lg">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email <span className="text-red-600">*</span></label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">E-mail <span className="text-red-600">*</span></label>
               <input
                 id="email"
                 type="text"
+                placeholder="Digite seu e-mail"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:ring-indigo-200 focus:border-indigo-500 sm:text-sm`}
@@ -48,20 +50,14 @@ export default function LoginForm({ toggleModal } : { toggleModal: () => void })
               {errors.email && <p className="mt-2 text-sm text-red-500">{errors.email}</p>}
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Senha <span className="text-red-600">*</span></label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring ${errors.password ? 'border-red-500' : 'border-gray-300'} focus:ring-indigo-200 focus:border-indigo-500 sm:text-sm`}
-              />
+              <label htmlFor="hs-toggle-password" className="block text-sm font-medium text-gray-700">Senha <span className="text-red-600">*</span></label>
+              <InputPassword  password={password} passwordError={errors.password} setPassword={setPassword}/>
               {errors.password && <p className="mt-2 text-sm text-red-500">{errors.password}</p>}
-              <a href="#" onClick={toggleModal} className="block text-sm text-blue-500 mt-4 hover:underline">Esqueci minha senha</a>
+              <a href="#" onClick={toggleModal} className="block text-sm text-blue-500 mt-4 hover:underline" style={{width: "max-content"}}>Esqueci minha senha</a>
             </div>
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-orange-600 text-white font-semibold rounded-md shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full py-2 px-4 bg-orange-600 text-white font-semibold  rounded-2xl shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
             >
               Entrar
             </button>

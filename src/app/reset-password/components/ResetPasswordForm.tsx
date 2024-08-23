@@ -1,3 +1,4 @@
+import InputPassword from "@/app/components/InputPassword";
 import { Dispatch, SetStateAction, useState } from "react"
 
 
@@ -33,25 +34,11 @@ export default function ResetPasswordForm({ setPasswordSuccess } : { setPassword
           <div className="space-y-4">
             <div>
               <label htmlFor="password" className="block text-gray-700">Senha <span className="text-red-600">*</span></label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={`block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:ring-indigo-200 focus:border-indigo-500 sm:text-sm mb-4`}
-                placeholder="Digite uma senha"
-              />
+              <InputPassword password={password} setPassword={setPassword} passwordError={passwordError} placeholder="Digite sua nova senha"/>
             </div>
             <div>
               <label htmlFor="confirm-password" className="block text-gray-700">Confirme sua senha <span className="text-red-600">*</span></label>
-              <input
-                type="password"
-                id="confirm-password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:ring-indigo-200 focus:border-indigo-500 sm:text-sm mb-4`}
-                placeholder="Repita sua senha"
-              />
+              <InputPassword setPassword={setConfirmPassword} password={confirmPassword} passwordError={passwordError} placeholder="Repita sua nova senha"  />
             </div>
             {passwordError && <p className="mt-2 text-red-500">{passwordError}</p>}
             <div className="mb-4">

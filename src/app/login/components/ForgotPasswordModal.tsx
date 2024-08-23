@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { validateEmail as validateEmailFunction } from "../../common/validateEmail"; 
+import { validateEmail as validateEmailFunction } from "../../utils/validateEmail"; 
 
 interface ForgotPasswordProps {
   toggleModal: () => void;
