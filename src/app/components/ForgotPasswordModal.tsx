@@ -29,21 +29,26 @@ export default function ForgotPasswordModal({ toggleModal }: ForgotPasswordProps
       <div className="absolute hidden sm:block inset-0 bg-gray-900 opacity-50" onClick={toggleModal}>
       </div>
       <form onSubmit={handleSubmit} className="bg-white flex flex-col p-8 rounded-lg shadow-lg z-10 sm:max-w-sm sm:min-w-1 sm:min-h-1 min-h-full min-w-full mx-auto">
-        <h2 className="text-2xl flex items-center font-bold gap-4 mb-4">
+        <h2 className="text-2xl flex items-center font-bold gap-4 mb-4 sm:justify-between">
           <span className="hover:cursor-pointer sm:hidden block" onClick={toggleModal}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6"> 
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /> 
             </svg>
           </span> 
-          Recuperar Senha
+          Recuperar Senha 
+          <span className="hover:cursor-pointer hidden sm:block ml-10" onClick={toggleModal}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </span>
         </h2>
         {emailSend ? (
           <>
             <p className="flex-1">Enviamos um link de recuperação de para o seu e-mail cadastrado. Por favor, verifique a sua caixa de entrada e a pasta de spam, se necessário.</p>
             <div className="flex justify-center mt-6">
               <button type="button"
-                onClick={() => window.location.href = "/reset-password"}
-                className="w-full py-2 px-4 bg-orange-600 text-white font-semibold rounded-md shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                onClick={() => window.location.href = "/reset-password-email"}
+                className="w-full py-2 px-4 bg-orange-600 text-white font-semibold rounded-2xl shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
               >
                 Entendido
               </button>
@@ -53,7 +58,7 @@ export default function ForgotPasswordModal({ toggleModal }: ForgotPasswordProps
           <>
             <p className="mb-4">Para recuperar sua senha, digite o e-mail cadastrado.</p>
             <div className="space-y-3 flex-1">
-              <label htmlFor="forgot-email" className="block text-sm font-medium text-gray-700">E-mail</label>
+              <label htmlFor="forgot-email" className="block text-sm font-medium text-gray-700">E-mail<span className="text-red-600">*</span></label>
               <input
                 type="text"
                 id="forgot-email"
@@ -67,7 +72,7 @@ export default function ForgotPasswordModal({ toggleModal }: ForgotPasswordProps
             <div className="flex justify-center mt-6">
               <button
                 type="submit"
-                className="w-full py-2 px-4 bg-orange-600 text-white font-semibold rounded-md shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full py-2 px-4 bg-orange-600 text-white font-semibold rounded-2xl shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
               >
                 Enviar
               </button>
